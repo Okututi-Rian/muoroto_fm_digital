@@ -37,8 +37,7 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
           </p>
           
           <p className="font-body text-lg lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Where traditional wisdom meets contemporary digital innovation. We are not just a radio station; 
-            we are a digital cultural hub celebrating Kikuyu heritage while embracing modern broadcasting excellence.
+            Muoroto FM is a National Radio Station based in Nairobi County, Kenya. Our programs are based on the main interests of our audience, ranging from News, Human Interest discussions, Spiritual nourishment, and Entertainment among others. Our slogan is an assurance that our affirmative role in the Kenyan Society is to always produce veracious content through our Super Talented Staff.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
@@ -57,8 +56,8 @@ const HeroSection = ({ className = '' }: HeroSectionProps) => {
           </div>
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
-export default HeroSection; 
+export default HeroSection;

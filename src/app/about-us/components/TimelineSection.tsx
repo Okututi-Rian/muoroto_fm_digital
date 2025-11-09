@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from '@/components/ui/AppIcon';
 
 interface TimelineEvent {
@@ -16,62 +16,67 @@ interface TimelineSectionProps {
 }
 
 const TimelineSection = ({ className = '' }: TimelineSectionProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const timelineEvents: TimelineEvent[] = [
     {
       year: '2018',
       title: 'Muoroto FM Launch',
-      description: 'Started broadcasting with a mission to preserve Kikuyu culture while embracing modern technology.',
+      description: 'Started broadcasting from Nairobi with a mission to preserve Kikuyu culture while embracing modern technology. Initial coverage in Nairobi and Kiambu counties.',
       icon: 'RocketLaunchIcon',
       category: 'milestone'
     },
     {
       year: '2019',
-      title: 'Digital Streaming Platform',
-      description: 'Launched 24/7 online streaming, reaching diaspora communities worldwide.',
-      icon: 'GlobeAltIcon',
-      category: 'innovation'
-    },
-    {
-      year: '2020',
-      title: 'Community Impact Award',
-      description: 'Recognized by Kenya Broadcasting Corporation for outstanding community service during pandemic.',
-      icon: 'TrophyIcon',
-      category: 'award'
-    },
-    {
-      year: '2021',
       title: 'Coverage Expansion',
-      description: 'Extended broadcast coverage to reach 15+ counties across Central and Eastern Kenya.',
+      description: 'Extended broadcast coverage to Kirinyaga, Embu, and Nakuru regions. Launched our first community outreach programs in rural areas.',
       icon: 'MapIcon',
       category: 'expansion'
     },
     {
+      year: '2020',
+      title: 'Digital Transformation',
+      description: 'Launched 24/7 online streaming platform, reaching diaspora communities worldwide. Introduced mobile app for enhanced listener experience.',
+      icon: 'GlobeAltIcon',
+      category: 'innovation'
+    },
+    {
+      year: '2021',
+      title: 'Community Impact Award',
+      description: 'Recognized by Kenya Broadcasting Corporation for outstanding community service during the pandemic, providing vital information and support.',
+      icon: 'TrophyIcon',
+      category: 'award'
+    },
+    {
       year: '2022',
-      title: 'Cultural Preservation Excellence',
-      description: 'Awarded by National Museums of Kenya for promoting indigenous language and traditions.',
+      title: 'Cultural Heritage Recognition',
+      description: 'Awarded by National Museums of Kenya for promoting indigenous language and traditions. Reached 100,000 regular listeners milestone.',
       icon: 'AcademicCapIcon',
       category: 'award'
     },
     {
       year: '2023',
-      title: 'Mobile App Launch',
-      description: 'Introduced progressive web app with offline capabilities and push notifications.',
-      icon: 'DevicePhoneMobileIcon',
-      category: 'innovation'
+      title: 'Regional Expansion',
+      description: 'Extended coverage to Meru and Mt. Kenya regions. Launched specialized programs for farmers, youth, and women empowerment.',
+      icon: 'ArrowTrendingUpIcon',
+      category: 'expansion'
     },
     {
       year: '2024',
       title: '500K Listeners Milestone',
-      description: 'Reached half a million regular listeners across digital and traditional platforms.',
+      description: 'Reached half a million regular listeners across digital and traditional platforms. Launched Muoroto Xpress for evening entertainment.',
       icon: 'UserGroupIcon',
       category: 'milestone'
     },
     {
       year: '2025',
-      title: 'Broadcasting Excellence Award',
-      description: 'Recognized as Kenya\'s Most Innovative Digital Radio Station by Media Council.',
+      title: 'Broadcasting Excellence',
+      description: 'Recognized as Kenya\'s Most Innovative Digital Radio Station by Media Council. Launched comprehensive news and current affairs programming.',
       icon: 'StarIcon',
       category: 'award'
     }
@@ -113,8 +118,8 @@ const TimelineSection = ({ className = '' }: TimelineSectionProps) => {
             Our Journey Through Time
           </h2>
           <p className="font-body text-lg text-muted-foreground max-w-3xl mx-auto">
-            From humble beginnings to becoming Kenya's most innovative digital radio station, 
-            explore the milestones that shaped our story.
+            From humble beginnings in 2018 to becoming Kenya's most innovative digital radio station, 
+            explore the milestones that shaped our story of authentic broadcasting.
           </p>
         </div>
 

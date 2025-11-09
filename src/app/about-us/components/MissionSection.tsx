@@ -18,7 +18,7 @@ const MissionSection = ({ className = '' }: MissionSectionProps) => {
       icon: 'HeartIcon',
       title: 'Community First',
       description: 'Every decision we make prioritizes our community\'s needs, values, and cultural preservation.',
-      metric: '15+ Communities Served'
+      metric: '15+ Counties Reached'
     },
     {
       icon: 'ShieldCheckIcon',
@@ -124,4 +124,4 @@ const MissionSection = ({ className = '' }: MissionSectionProps) => {
   );
 };
 
-export default MissionSection; 
+export default MissionSection;

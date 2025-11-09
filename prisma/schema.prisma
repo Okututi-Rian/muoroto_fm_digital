@@ -1,0 +1,178 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  clerkId       String    @unique
+  email         String    @unique
+  username      String?
+  firstName     String?
+  lastName      String?
+  imageUrl      String?
+  role          Role      @default(LISTENER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  shows         Show[]
+  newsArticles  NewsArticle[]
+  podcasts      Podcast[]
+  
+  @@map("users")
+}
+
+model Show {
+  id            String    @id @default(cuid())
+  title         String
+  description   String
+  hostId        String
+  genre         String
+  timeSlot      String
+  duration      String
+  frequency     String
+  imageUrl      String?
+  isActive      Boolean   @default(true)
+  isLive        Boolean   @default(false)
+  nextEpisode   String?
+  rating        Float     @default(0)
+  totalEpisodes Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  host          User      @relation(fields: [hostId], references: [id])
+  scheduleItems ScheduleItem[]
+  
+  @@map("shows")
+}
+
+model ScheduleItem {
+  id        String   @id @default(cuid())
+  showId    String
+  day       String   // Monday, Tuesday, etc.
+  startTime String
+  endTime   String
+  isLive    Boolean  @default(false)
+  
+  // Relations
+  show      Show     @relation(fields: [showId], references: [id])
+  
+  @@map("schedule_items")
+}
+
+model NewsArticle {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  excerpt     String
+  content     String
+  authorId    String
+  category    String
+  imageUrl    String?
+  readTime    Int       @default(5)
+  priority    Priority  @default(MEDIUM)
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  author      User      @relation(fields: [authorId], references: [id])
+  
+  @@map("news_articles")
+}
+
+model Podcast {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  hostId      String
+  showId      String?
+  audioUrl    String
+  duration    String
+  imageUrl    String?
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  host        User      @relation(fields: [hostId], references: [id])
+  show        Show?     @relation(fields: [showId], references: [id])
+  
+  @@map("podcasts")
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  fileName    String
+  originalName String
+  fileType    String
+  fileSize    Int
+  url         String
+  thumbnailUrl String?
+  folder      String   @default("uploads")
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("media_assets")
+}
+
+model BreakingNews {
+  id        String   @id @default(cuid())
+  title     String
+  priority  Priority @default(HIGH)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("breaking_news")
+}
+
+model SiteSettings {
+  id            String   @id @default(cuid())
+  siteName      String   @default("Muoroto FM")
+  tagline       String   @default("Mugambo Wa Ma - The Truthful Voice")
+  description   String?
+  logoUrl       String?
+  faviconUrl    String?
+  primaryColor  String   @default("#2E7D32")
+  secondaryColor String  @default("#FFC107")
+  accentColor   String   @default("#009688")
+  facebookUrl   String?
+  twitterUrl    String?
+  instagramUrl  String?
+  youtubeUrl    String?
+  whatsappNumber String?
+  email         String   @default("muorototv@gmail.com")
+  phoneNumber   String?
+  address       String?
+  streamingUrl  String   @default("https://uk4-vn.mixstream.net:8136/listen.mp3")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("site_settings")
+}
+
+enum Role {
+  LISTENER
+  EDITOR
+  DJ
+  ADMIN
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
