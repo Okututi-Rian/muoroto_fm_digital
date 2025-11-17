@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import DashboardStats from './DashboardStats';
 import QuickActions from './QuickActions';
 import RecentActivity from './RecentActivity';
@@ -13,6 +13,7 @@ import Icon from '../../../components/ui/AppIcon'
 
 const AdminDashboard = () => {
   const { user, isLoaded } = useUser();
+  const router = useRouter();
   const [activeView, setActiveView] = useState('overview');
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -21,11 +22,12 @@ const AdminDashboard = () => {
   }, []);
 
   // Check if user has admin role
-  const userRole = user?.publicMetadata?.role as string;
-  
-  if (isLoaded && userRole !== 'ADMIN' && userRole !== 'EDITOR') {
-    redirect("/");
-  }
+  useEffect(() => {
+    if (isLoaded && !user) {
+      // User not logged in (shouldn't happen due to middleware, but safety check)
+      router.push("/sign-in");
+    }
+  }, [isLoaded, user, router]);
 
   if (!isHydrated) {
     return (

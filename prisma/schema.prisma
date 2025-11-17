@@ -1,3 +1,57 @@
+
+model HomepageHero {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String   // ImageKit URL
+  alt         String
+  link        String
+  badge       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CommunityHighlight {
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  message     String
+  imageUrl    String   // ImageKit URL
+  alt         String
+  rating      Int
+  showTitle   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TrendingNewsItem {
+  id          String   @id @default(cuid())
+  title       String
+  excerpt     String
+  imageUrl    String   // ImageKit URL
+  alt         String
+  category    String
+  publishedAt DateTime
+  readTime    Int
+  author      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UpcomingEvent {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  time        String
+  location    String
+  imageUrl    String   // ImageKit URL
+  alt         String
+  category    String
+  isLive      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -17,7 +71,7 @@ model User {
   username      String?
   firstName     String?
   lastName      String?
-  imageUrl      String?
+  // imageUrl removed; use MediaAsset/ImageKit
   role          Role      @default(LISTENER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -51,6 +105,7 @@ model Show {
   // Relations
   host          User      @relation(fields: [hostId], references: [id])
   scheduleItems ScheduleItem[]
+  podcasts      Podcast[]
   
   @@map("shows")
 }

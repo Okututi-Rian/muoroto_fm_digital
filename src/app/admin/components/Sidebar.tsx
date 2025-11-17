@@ -12,6 +12,12 @@ interface SidebarProps {
 const Sidebar = ({ activeView, setActiveView, views, user }: SidebarProps) => {
   const userRole = user?.publicMetadata?.role as string;
   const userName = user?.firstName || user?.username || 'User';
+  
+  // Default placeholder avatar as data URL (gray background with initials)
+  const getDefaultAvatar = () => {
+    const initials = (user?.firstName?.[0] || 'U').toUpperCase();
+    return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='%236B7280' width='48' height='48'/%3E%3Ctext x='24' y='24' font-size='24' fill='white' text-anchor='middle' dy='.3em' font-family='Arial'%3E${initials}%3C/text%3E%3C/svg%3E`;
+  };
 
   return (
     <div className="fixed left-0 top-0 h-full w-64 bg-card border-r border-border z-40 hidden lg:block">
@@ -34,7 +40,7 @@ const Sidebar = ({ activeView, setActiveView, views, user }: SidebarProps) => {
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <img
-                src={user?.imageUrl || '/api/placeholder/48/48'}
+                src={user?.imageUrl || getDefaultAvatar()}
                 alt={userName}
                 className="w-full h-full object-cover"
               />
